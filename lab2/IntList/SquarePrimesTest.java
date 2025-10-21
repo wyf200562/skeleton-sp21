@@ -17,4 +17,18 @@ public class SquarePrimesTest {
         assertEquals("14 -> 15 -> 16 -> 289 -> 18", lst.toString());
         assertTrue(changed);
     }
+
+    /**
+     * This test is designed to fail to expose a bug in isPrime.
+     * isPrime incorrectly identifies 25 as a prime number.
+     */
+    @Test
+    public void testSquarePrimesSimple2() {
+        IntList lst = IntList.of(100, 17, 29);
+        boolean changed = IntListExercises.squarePrimes(lst);
+        assertEquals("100 -> 289 -> 841", lst.toString());
+        assertTrue(changed);
+    }
+
+
 }
