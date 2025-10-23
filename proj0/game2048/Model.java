@@ -114,6 +114,99 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
+//        for (int i = 0; i < this.board.size(); i++) {
+//            for (int j = 0; j < this.board.size(); j++) {
+//                Tile t = this.board.tile(i, j);
+//                if (t != null){
+//                    if (this.board.move(i, 3, t)){
+//                        this.score += this.board.tile(i , 3).value();
+//                    }
+//                    changed = true;
+//                }
+//            }
+//        }
+
+//        int count = 0;
+//        Tile t1 = this.board.tile(2, 3);
+//        if (t1 != null) { count++; }
+//
+//        int k = 3;
+//        for (int i = 0; i < this.board.size() - 1; i++) {
+//            k -= i;
+//            Tile t2 = this.board.tile(2, i);
+//            if (t2 != null){
+//                boolean flag = this.board.move(2, 3, t2);
+//                if (!flag){
+//                    count++;
+////                    this.board.move(2, i, t2);
+//                    if (k - count > 0) { k = k - count; }
+//                    this.board.move(2, i + k, t2);
+//                    k = 3;
+//                }
+//                this.score = this.board.tile(2, 3).value();
+//                changed = true;
+//            }
+//        }
+
+//        int target = board.size() - 1;
+//        for (int i = 3; i >= 0; i--) {
+//            Tile t = board.tile(2, i);
+//            if (t != null){
+//                if (t.value() == board.tile(2, target).value()){
+//                    if (board.move(2, target, t)){
+//                        score += board.tile(2, target).value();
+//                        target--;
+//                    }
+//                }else {
+//                    if (board.tile(2, target) == null){
+//                        board.move(2, target, t);
+//                        target--;
+//                    } else if (board.tile(2, i) == board.tile(2, target)) {
+//                        continue;
+//                    } else {
+//                        target--;
+//                        board.move(2, target, t);
+//                    }
+//
+//
+//                }
+//            }
+//        }
+
+        int target = 0;
+        for (int i = 0; i >= 3; i++) {
+            Tile t_Target = board.tile(2, target);
+            Tile t_Curr = board.tile(2, i);
+
+            if (t_Target == null){
+                if (t_Curr != null){
+                    board.move(2, target, t_Curr);
+                    target++;
+                } else continue;
+            }
+
+            if (t_Curr.row() == t_Target.row() && t_Curr.col() == t_Target.col()) {
+                target++;
+                continue;
+            }
+
+            if (t_Target != null && t_Curr != null){
+                if (t_Target.value() == t_Curr.value()){
+                    board.move(2, target, t_Curr);
+                    score += board.tile(2, target).value();
+                    target++;
+                }
+            }
+
+            if (t_Target.value() != t_Curr.value()){
+                target++;
+                board.move(2, target, t_Curr);
+            }
+
+        }
+
+        changed = true;
+
         checkGameOver();
         if (changed) {
             setChanged();
